@@ -9,8 +9,6 @@ import {User} from '../../models/User';
 export class UsersComponent implements OnInit {
   users: User[];
   showExtended: boolean = false;
-  currentClasses = {};
-  currentStyles = {};
   isActive: boolean = true;
 
   constructor() {
@@ -23,9 +21,7 @@ export class UsersComponent implements OnInit {
         city: 'Boston',
         state: 'MA'
       },
-      image: 'https://picsum.photos/600/600',
       isActive: true,
-      balance: 100,
       registered: new Date('01/02/2018 08:30:00')
     }, {
       firstName: 'Luke',
@@ -36,9 +32,7 @@ export class UsersComponent implements OnInit {
         city: 'Boston',
         state: 'MA',
       },
-      image: 'https://picsum.photos/600/600',
       isActive: true,
-      balance: 500,
       registered: new Date('01/05/2011 09:31:00')
     }, {
       firstName: 'John',
@@ -49,33 +43,17 @@ export class UsersComponent implements OnInit {
         city: 'Boston',
         state: 'MA'
       },
-      image: 'https://picsum.photos/600/600',
       isActive: false,
-      balance: 50,
       registered: new Date('01/02/2018 08:30:00')
     }];
 
   }
 
   ngOnInit(): void {
-    this.setCurrentClasses();
-    this.setCurrentStyles();
   }
 
-  private setCurrentClasses() {
-    this.currentClasses = {
-      'btn-success': this.isActive
-    }
-  }
 
   setShowExtended(): void {
     this.showExtended = !this.showExtended;
-    this.setCurrentStyles();
-  }
-
-  setCurrentStyles() {
-    this.currentStyles = {
-      'padding-top': this.showExtended ? '0' : '40px'
-    }
   }
 }
