@@ -2,35 +2,45 @@
 <div class="card mb-3" *ngIf="isExpanded">
   <div class="card-body">
     <h3>New User Form</h3>
-    <form (submit)="onSubmit($event)">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
       <div class="mb-3">
         <label for="firstname" class="form-label">Firstname</label>
-        <input type="text" class="form-control"  [(ngModel)]="formUser.firstName" id="firstname" name="firstname">
+        <input type="text" class="form-control" [(ngModel)]="formUser.firstName" id="firstname" name="firstName"
+               required minlength="2" #userFirstName="ngModel"
+               [ngClass]="{'is-invalid':userFirstName.errors && userFirstName.touched}">
+        <div [hidden]="!userFirstName.errors?.['required']" class="invalid-feedback">
+          First name required
+        </div>
+        <div [hidden]="!userFirstName.errors?.['minlength']" class="invalid-feedback">
+          Must be at least 2 characters
+        </div>
       </div>
       <div class="mb-3">
         <label for="lastname" class="form-label">Lastname</label>
-        <input type="text" class="form-control" id="lastname" [(ngModel)]="formUser.lastName" name="lastname">
+        <input type="text" class="form-control" id="lastname" [(ngModel)]="formUser.lastName" name="lastName"
+               required minlength="2" #userLastName="ngModel"
+               [ngClass]="{'is-invalid': userLastName.errors && userLastName.touched}">
+        <div [hidden]="!userLastName.errors?.['required']" class="invalid-feedback">
+          Last name required
+        </div>
+        <div [hidden]="!userLastName.errors?.['minlength']" class="invalid-feedback">
+          Must be at least 2 characters
+        </div>
       </div>
       <div class="mb-3">
-        <label for="age" class="form-label">Age</label>
-        <input type="number" class="form-control" id="age" [(ngModel)]="formUser.age" name="age">
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <label for="street" class="form-label">Street</label>
-          <input type="email" class="form-control" id="street" [(ngModel)]="formUser.address.street" name="street">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" [(ngModel)]="formUser.email" name="email" required
+               pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+               #userEmail="ngModel" [ngClass]="{'is-invalid': userEmail.errors && userEmail.touched}">
+        <div [hidden]="!userEmail.errors?.['required']" class="invalid-feedback">
+          Last name required
         </div>
-        <div class="col">
-          <label for="city" class="form-label">City</label>
-          <input type="email" class="form-control" id="city" [(ngModel)]="formUser.address.city" name="city">
-        </div>
-        <div class="col">
-          <label for="state" class="form-label">State</label>
-          <input type="email" class="form-control" id="state" [(ngModel)]="formUser.address.state" name="state">
+        <div [hidden]="!userEmail.errors?.['pattern']" class="invalid-feedback">
+          Mail is not valid
         </div>
       </div>
       <div class="d-grid gap-1 col-6 mx-auto">
-        <button type="submit" class="btn btn-primary" (click)="addUser()">Add User</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">Add User</button>
       </div>
     </form>
   </div>
@@ -44,9 +54,7 @@
         </button>
       </h3>
       <ul class="list-group" *ngIf="user.hide">
-        <li class="list-group-item">Age: {{user.age}}</li>
-        <li class="list-group-item">Address: {{user.address.street}} {{user.address.city}}
-          , {{user.address.state}} </li>
+        <li class="list-group-item">Email: {{user.email}}</li>
         <li class="list-group-item">Joined: {{user.registered | date:'shortDate'}}</li>
       </ul>
     </div>

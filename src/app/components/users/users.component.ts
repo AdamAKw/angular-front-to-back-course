@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../models/User';
 
 @Component({
@@ -7,15 +7,11 @@ import {User} from '../../models/User';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  @ViewChild('userForm') form: any;
   formUser: User = {
     firstName: '',
     lastName: '',
-    age: undefined,
-    address: {
-      street: '',
-      city: '',
-      state: ''
-    }
+    email: ''
   }
 
 
@@ -26,36 +22,21 @@ export class UsersComponent implements OnInit {
     this.users = [{
       firstName: 'John',
       lastName: 'Smith',
-      age: 31,
-      address: {
-        street: '50 Main st',
-        city: 'Boston',
-        state: 'MA'
-      },
+      email: 'john@gmail.com',
       isActive: true,
       registered: new Date('01/02/2018 08:30:00'),
       hide: false
     }, {
       firstName: 'Luke',
       lastName: 'Doe',
-      age: 20,
-      address: {
-        street: '50 Main st',
-        city: 'Boston',
-        state: 'MA',
-      },
+      email: 'Luke@gmail.com',
       isActive: true,
       registered: new Date('01/05/2011 09:31:00'),
       hide: false
     }, {
       firstName: 'John',
       lastName: 'Doe',
-      age: 30,
-      address: {
-        street: '50 Main st',
-        city: 'Boston',
-        state: 'MA'
-      },
+      email: 'JohnDoe@gmail.com',
       isActive: false,
       registered: new Date('01/02/2018 08:30:00'),
       hide: false
@@ -79,25 +60,11 @@ export class UsersComponent implements OnInit {
     return user.hide ? 'fa fa-minus' : 'fa fa-plus';
   }
 
-  onSubmit(e: Event) {
-    e.preventDefault();
-  }
+  onSubmit({value, valid}: { value: User, valid: boolean | null }) {
+    value.isActive = true;
+    value.registered = new Date();
+    this.users.unshift(value);
 
-  addUser(): void {
-    this.formUser.isActive = true;
-    this.formUser.registered = new Date();
-    this.users.unshift(this.formUser);
-
-
-    this.formUser = {
-      firstName: '',
-      lastName: '',
-      age: undefined,
-      address: {
-        street: '',
-        city: '',
-        state: ''
-      }
-    }
+    this.form.reset();
   }
 }
