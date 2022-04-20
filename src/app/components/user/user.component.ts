@@ -27,7 +27,7 @@ export class UserComponent implements OnInit{
     }
   }
 
-  getAge(): number {
+  getAge() {
     return this.user.age;
   }
 

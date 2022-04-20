@@ -7,9 +7,20 @@ import {User} from '../../models/User';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  formUser: User = {
+    firstName: '',
+    lastName: '',
+    age: undefined,
+    address: {
+      street: '',
+      city: '',
+      state: ''
+    }
+  }
+
+
   users: User[];
-  showExtended: boolean = false;
-  isActive: boolean = true;
+  isExpanded: boolean = false;
 
   constructor() {
     this.users = [{
@@ -22,7 +33,8 @@ export class UsersComponent implements OnInit {
         state: 'MA'
       },
       isActive: true,
-      registered: new Date('01/02/2018 08:30:00')
+      registered: new Date('01/02/2018 08:30:00'),
+      hide: false
     }, {
       firstName: 'Luke',
       lastName: 'Doe',
@@ -33,7 +45,8 @@ export class UsersComponent implements OnInit {
         state: 'MA',
       },
       isActive: true,
-      registered: new Date('01/05/2011 09:31:00')
+      registered: new Date('01/05/2011 09:31:00'),
+      hide: false
     }, {
       firstName: 'John',
       lastName: 'Doe',
@@ -44,7 +57,8 @@ export class UsersComponent implements OnInit {
         state: 'MA'
       },
       isActive: false,
-      registered: new Date('01/02/2018 08:30:00')
+      registered: new Date('01/02/2018 08:30:00'),
+      hide: false
     }];
 
   }
@@ -53,7 +67,37 @@ export class UsersComponent implements OnInit {
   }
 
 
-  setShowExtended(): void {
-    this.showExtended = !this.showExtended;
+  setShowExtended(user: User): void {
+    user.hide = !user.hide;
+  }
+
+  setShowForm() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  setExtendIconClasses(user: User): string {
+    return user.hide ? 'fa fa-minus' : 'fa fa-plus';
+  }
+
+  onSubmit(e: Event) {
+    e.preventDefault();
+  }
+
+  addUser(): void {
+    this.formUser.isActive = true;
+    this.formUser.registered = new Date();
+    this.users.unshift(this.formUser);
+
+
+    this.formUser = {
+      firstName: '',
+      lastName: '',
+      age: undefined,
+      address: {
+        street: '',
+        city: '',
+        state: ''
+      }
+    }
   }
 }
