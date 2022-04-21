@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { UserComponent} from './components/user/user.component';
 import { UsersComponent } from './components/users/users.component';
 import { NavbarComponent } from './components/navbar/navbar.component'
+import {UsersDataServiceService} from "./services/users-data-service.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,7 @@ import { NavbarComponent } from './components/navbar/navbar.component'
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UsersDataServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

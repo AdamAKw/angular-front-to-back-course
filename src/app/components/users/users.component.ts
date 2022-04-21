@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../models/User';
+import {UsersDataServiceService} from "../../services/users-data-service.service";
 
 @Component({
   selector: 'app-users',
@@ -15,33 +16,9 @@ export class UsersComponent implements OnInit {
   }
 
 
-  users: User[];
   isExpanded: boolean = false;
 
-  constructor() {
-    this.users = [{
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'john@gmail.com',
-      isActive: true,
-      registered: new Date('01/02/2018 08:30:00'),
-      hide: false
-    }, {
-      firstName: 'Luke',
-      lastName: 'Doe',
-      email: 'Luke@gmail.com',
-      isActive: true,
-      registered: new Date('01/05/2011 09:31:00'),
-      hide: false
-    }, {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'JohnDoe@gmail.com',
-      isActive: false,
-      registered: new Date('01/02/2018 08:30:00'),
-      hide: false
-    }];
-
+  constructor(private dataUsersServices: UsersDataServiceService) {
   }
 
   ngOnInit(): void {
@@ -63,8 +40,10 @@ export class UsersComponent implements OnInit {
   onSubmit({value, valid}: { value: User, valid: boolean | null }) {
     value.isActive = true;
     value.registered = new Date();
-    this.users.unshift(value);
-
+    this.dataUsersServices.addUser(value);
     this.form.reset();
+  }
+  get users() :User[] {
+    return this.dataUsersServices.getUsers();
   }
 }
