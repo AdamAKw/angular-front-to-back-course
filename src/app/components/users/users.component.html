@@ -46,8 +46,8 @@
   </div>
 </div>
 
-<ul class="list-unstyled" *ngIf="users.length > 0; else noUsers">
-  <li class="card mb-2" *ngFor="let user of users" [class.bg-light]="user.isActive">
+<ul class="list-unstyled" *ngIf="getUsers().length > 0; else noUsers">
+  <li class="card mb-2" *ngFor="let user of getUsers()" [class.bg-light]="user.isActive">
     <div class="card-body">
       <h3>{{user.firstName}} {{this.user.lastName}}
         <button class="btn btn-secondary" (click)="setShowExtended(user)"><i [ngClass]="setExtendIconClasses(user)"></i>

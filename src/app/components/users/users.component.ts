@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../models/User';
 import {UsersDataServiceService} from "../../services/users-data-service.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-users',
@@ -14,7 +15,7 @@ export class UsersComponent implements OnInit {
     lastName: '',
     email: ''
   }
-
+  users: User[] = [];
 
   isExpanded: boolean = false;
 
@@ -22,6 +23,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataUsersServices.getUsers().subscribe(v => this.users = v);
   }
 
 
@@ -43,7 +45,7 @@ export class UsersComponent implements OnInit {
     this.dataUsersServices.addUser(value);
     this.form.reset();
   }
-  get users() :User[] {
-    return this.dataUsersServices.getUsers();
+  getUsers() :User[] {
+    return this.users;
   }
 }
