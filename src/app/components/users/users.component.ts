@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../models/User';
 import {UsersDataServiceService} from "../../services/users-data-service.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-users',
