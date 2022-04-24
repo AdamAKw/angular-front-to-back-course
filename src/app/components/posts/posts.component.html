@@ -1,6 +1,6 @@
 <div class="card mb-3" *ngFor="let post of getPosts() ">
   <div class="card-header">
-    <h4>{{post.title}}</h4>
+    <h4><a routerLink="/posts/{{post.id}}">{{post.title}}</a></h4>
   </div>
   <div class="card-body">
     <p>{{post.body}}</p>
